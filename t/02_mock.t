@@ -37,6 +37,20 @@ subtest 'mock()' => sub {
         is $other->bar => 'bar';
         is $another->bar => 'bar';
     };
+
+    subtest 'should subref can take argument' => sub {
+        my $foo = t::Foo->new;
+        mock($foo)->expects('bar')->returns(sub {
+            my ($self, @args) = @_;
+
+            is $args[0], 'arg1';
+            is $args[1], 'arg2';
+
+            return 'BAR';
+        });
+
+        is $foo->bar('arg1', 'arg2') => 'BAR';
+    };
 };
 
 done_testing;

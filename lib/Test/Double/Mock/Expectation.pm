@@ -55,7 +55,7 @@ sub behavior {
         if ($self->{with_args}) {
             $self->_check_with($self->{called}, @args)
         }
-        return $self->{behavior}->();
+        return $self->{behavior}->($instance, @args);
     };
 }
 
